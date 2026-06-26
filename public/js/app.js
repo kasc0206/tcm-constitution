@@ -244,11 +244,126 @@ function showResult(assessment) {
     detailContainer.appendChild(card);
   }
 
-  // 存储结果供 resize 重绘
+  // 存储结果供 resize 重绘 和 下载报告使用
   window._lastResults = results;
+  window._lastAssessment = assessment;
 
   // 延迟绘制雷达图，等待 DOM 布局完成
   setTimeout(() => drawRadarChart(results), 100);
+}
+
+// ========================
+// 下载 Markdown 报告
+// ========================
+
+function downloadMarkdownReport() {
+  const assessment = window._lastAssessment;
+  if (!assessment) {
+    showToast("没有可下载的报告，请先完成测评");
+    return;
+  }
+
+  const { results, conclusion, userInfo } = assessment;
+  const now = new Date();
+  const dateStr =
+    now.getFullYear() +
+    "-" +
+    String(now.getMonth() + 1).padStart(2, "0") +
+    "-" +
+    String(now.getDate()).padStart(2, "0");
+
+  const genderLabel = userInfo.gender === "male" ? "男" : "女";
+
+  let md = "";
+
+  // 标题
+  md += "# 中医体质分类与判定报告\n\n";
+  md += `依据 **GB/T 46939-2025**《中医体质分类与判定》国家标准\n\n`;
+
+  // 基本信息
+  md += "## 基本信息\n\n";
+  md += `| 项目 | 内容 |\n| --- | --- |\n`;
+  md += `| 姓名 | ${userInfo.name} |\n`;
+  md += `| 性别 | ${genderLabel} |\n`;
+  md += `| 年龄 | ${userInfo.age} 岁 |\n`;
+  md += `| 测评日期 | ${dateStr} |\n`;
+  md += "\n";
+
+  // 判定结论
+  md += "## 判定结论\n\n";
+  md += `**${conclusion.primaryIcon} ${conclusion.primaryName}**\n\n`;
+  md += `${conclusion.description}\n\n`;
+
+  // 各体质得分
+  md += "## 各体质得分详情\n\n";
+  md += "| 体质类型 | 原始分 | 转化分 | 判定结果 |\n";
+  md += "| --- | --- | --- | --- |\n";
+  for (const r of results) {
+    md += `| ${r.icon} ${r.name} | ${r.rawScore} | ${r.convertedScore.toFixed(1)} | ${r.label} |\n`;
+  }
+  md += "\n";
+
+  // 体质特征与调养建议
+  md += "## 体质特征与调养建议\n\n";
+
+  const detailConstitutions = [];
+  if (conclusion.isBalanced || conclusion.verdict === "basic") {
+    detailConstitutions.push(
+      CONSTITUTION_TYPES.find((c) => c.id === "balanced"),
+    );
+  }
+  if (conclusion.primary) {
+    const primaryCT = CONSTITUTION_TYPES.find(
+      (c) => c.id === conclusion.primary.id,
+    );
+    if (primaryCT) detailConstitutions.push(primaryCT);
+  }
+  if (conclusion.biased) {
+    for (const b of conclusion.biased) {
+      if (!detailConstitutions.find((d) => d.id === b.id)) {
+        const ct = CONSTITUTION_TYPES.find((c) => c.id === b.id);
+        if (ct) detailConstitutions.push(ct);
+      }
+    }
+  }
+  if (conclusion.tend) {
+    for (const t of conclusion.tend) {
+      if (!detailConstitutions.find((d) => d.id === t.id)) {
+        const ct = CONSTITUTION_TYPES.find((c) => c.id === t.id);
+        if (ct) detailConstitutions.push(ct);
+      }
+    }
+  }
+
+  for (const ct of detailConstitutions) {
+    md += `### ${ct.icon} ${ct.name}\n\n`;
+    md += `- **形体特征**：${ct.traits.形体特征}\n`;
+    md += `- **常见表现**：${ct.traits.常见表现}\n`;
+    md += `- **心理特征**：${ct.traits.心理特征}\n`;
+    md += `- **发病倾向**：${ct.traits.发病倾向}\n`;
+    md += `- **适应能力**：${ct.traits.适应能力}\n\n`;
+    md += `**💡 调养建议**：${ct.调养建议}\n\n`;
+  }
+
+  // 免责声明
+  md += "---\n\n";
+  md += `> 本报告由中医体质分类与判定系统自动生成，依据 GB/T 46939-2025 国家标准计算。\n`;
+  md += `> 测评结果仅供参考，不构成医疗建议。如有身体不适，请及时就医。\n`;
+  md += `> 生成时间：${dateStr}\n`;
+
+  // 下载
+  const filename = `中医体质判定报告_${userInfo.name}_${dateStr}.md`;
+  const blob = new Blob([md], { type: "text/markdown;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+
+  showToast(`✅ 报告已下载：${filename}`);
 }
 
 // ========================
