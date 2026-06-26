@@ -1,0 +1,636 @@
+/* ==========================================
+   GB/T 46939-2025 中医体质分类与判定系统
+   ========================================== */
+
+/* CSS Variables */
+:root {
+  --primary: #4a7c59;
+  --primary-light: #6b9c7a;
+  --primary-dark: #2d5a3a;
+  --primary-bg: #f0f7f2;
+  --accent: #c17b4a;
+  --accent-light: #e8a87c;
+  --text: #2c3e50;
+  --text-light: #7f8c8d;
+  --bg: #f8f9fa;
+  --card-bg: #ffffff;
+  --border: #e0e4e8;
+  --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  --radius: 12px;
+  --radius-sm: 8px;
+
+  /* 体质颜色 */
+  --color-balanced: #4a7c59;
+  --color-qi-deficiency: #d4a574;
+  --color-yang-deficiency: #8fc1d9;
+  --color-yin-deficiency: #d97a7a;
+  --color-phlegm: #b8a07a;
+  --color-damp-heat: #d9a84a;
+  --color-blood-stasis: #7a4a6b;
+  --color-qi-stagnation: #6b8fa0;
+  --color-allergic: #a08ab8;
+}
+
+/* Reset & Base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  color: #fff;
+  padding: 40px 0 32px;
+  text-align: center;
+}
+
+.header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.subtitle {
+  margin-top: 6px;
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+/* Steps Indicator */
+.steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 32px 0 8px;
+  gap: 0;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  color: var(--text-light);
+  transition: all 0.3s;
+}
+
+.step.active {
+  background: var(--primary-bg);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.step.completed {
+  color: var(--primary);
+}
+
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--border);
+  color: var(--text-light);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.step.active .step-number {
+  background: var(--primary);
+  color: #fff;
+}
+
+.step.completed .step-number {
+  background: var(--primary-light);
+  color: #fff;
+}
+
+.step-connector {
+  width: 40px;
+  height: 2px;
+  background: var(--border);
+}
+
+/* Cards */
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.card-header {
+  padding: 24px 28px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.card-header h2 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.text-muted {
+  color: var(--text-light);
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+/* Sections */
+.section {
+  padding: 20px 28px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--primary-bg);
+  color: var(--primary-dark);
+}
+
+/* Forms */
+.form-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.form-group {
+  flex: 1;
+  min-width: 160px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-light);
+  margin-bottom: 4px;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  color: var(--text);
+  background: var(--card-bg);
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.12);
+}
+
+/* Constitution Question Groups */
+.constitution-group {
+  margin-bottom: 28px;
+  padding: 20px;
+  border-radius: var(--radius-sm);
+  background: #fafbfc;
+  border: 1px solid var(--border);
+}
+
+.constitution-group:last-child {
+  margin-bottom: 0;
+}
+
+.constitution-group-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.constitution-group-icon {
+  font-size: 24px;
+}
+
+.constitution-group-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.constitution-group-subtitle {
+  font-size: 12px;
+  color: var(--text-light);
+  margin-left: auto;
+}
+
+/* Question Items */
+.question-item {
+  padding: 12px 0;
+  border-bottom: 1px solid #edf0f3;
+}
+
+.question-item:last-child {
+  border-bottom: none;
+}
+
+.question-text {
+  font-size: 14px;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.question-text .reverse-note {
+  display: inline-block;
+  font-size: 11px;
+  color: #d97a7a;
+  background: #fdf0f0;
+  padding: 1px 6px;
+  border-radius: 4px;
+  margin-left: 6px;
+}
+
+.question-text .gender-note {
+  display: inline-block;
+  font-size: 11px;
+  color: var(--accent);
+  background: #fdf5ee;
+  padding: 1px 6px;
+  border-radius: 4px;
+  margin-left: 6px;
+}
+
+/* Rating Scale */
+.rating-scale {
+  display: flex;
+  gap: 4px;
+}
+
+.rating-option {
+  flex: 1;
+  text-align: center;
+}
+
+.rating-option input[type="radio"] {
+  display: none;
+}
+
+.rating-option label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 4px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 11px;
+  color: var(--text-light);
+}
+
+.rating-option label:hover {
+  border-color: var(--primary-light);
+  background: var(--primary-bg);
+}
+
+.rating-option input[type="radio"]:checked + label {
+  border-color: var(--primary);
+  background: var(--primary-bg);
+  color: var(--primary-dark);
+  font-weight: 600;
+}
+
+.rating-label {
+  font-size: 12px;
+  margin-bottom: 2px;
+}
+
+.rating-value {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* Scale Legend */
+.scale-legend {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 4px 12px;
+  font-size: 12px;
+  color: var(--text-light);
+}
+
+/* Submit Area */
+.submit-area {
+  padding: 20px 28px 28px;
+  text-align: center;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-icon {
+  font-size: 18px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(74, 124, 89, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(74, 124, 89, 0.4);
+}
+
+.btn-secondary {
+  background: var(--bg);
+  color: var(--text);
+  border: 1.5px solid var(--border);
+}
+
+.btn-secondary:hover {
+  background: var(--border);
+}
+
+.btn-large {
+  padding: 14px 36px;
+  font-size: 16px;
+}
+
+/* Page Transition */
+.page {
+  display: none;
+  animation: fadeIn 0.4s ease;
+}
+
+.page.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Result Banner */
+.result-banner {
+  padding: 28px;
+  text-align: center;
+  border-radius: var(--radius-sm);
+  margin: 20px 28px;
+}
+
+.result-banner.balanced {
+  background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+  border: 2px solid var(--color-balanced);
+}
+
+.result-banner.biased {
+  background: linear-gradient(135deg, #fce4ec, #f3e5f5);
+  border: 2px solid var(--color-blood-stasis);
+}
+
+.result-type {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.result-type.balanced {
+  color: var(--color-balanced);
+}
+.result-type.qi-deficiency {
+  color: var(--color-qi-deficiency);
+}
+.result-type.yang-deficiency {
+  color: #5a9ab5;
+}
+.result-type.yin-deficiency {
+  color: var(--color-yin-deficiency);
+}
+.result-type.phlegm-dampness {
+  color: var(--color-phlegm);
+}
+.result-type.damp-heat {
+  color: var(--color-damp-heat);
+}
+.result-type.blood-stasis {
+  color: var(--color-blood-stasis);
+}
+.result-type.qi-stagnation {
+  color: var(--color-qi-stagnation);
+}
+.result-type.allergic {
+  color: var(--color-allergic);
+}
+
+.result-desc {
+  font-size: 14px;
+  color: var(--text-light);
+  margin-top: 4px;
+}
+
+/* Chart Container */
+.chart-container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.chart-container canvas {
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* Table */
+.table-container {
+  overflow-x: auto;
+}
+
+.result-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.result-table th {
+  background: var(--primary-bg);
+  color: var(--primary-dark);
+  font-weight: 600;
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 2px solid var(--primary-light);
+}
+
+.result-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.result-table tr:hover {
+  background: #fafbfc;
+}
+
+.result-table .highlight-row {
+  background: #fff8e1 !important;
+  font-weight: 600;
+}
+
+.result-table .verdict-yes {
+  color: #2e7d32;
+  font-weight: 600;
+}
+.result-table .verdict-tend {
+  color: #e65100;
+  font-weight: 600;
+}
+.result-table .verdict-no {
+  color: var(--text-light);
+}
+.result-table .verdict-basic {
+  color: #558b2f;
+  font-weight: 600;
+}
+
+/* Constitution Detail */
+.constitution-detail-card {
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  border-radius: var(--radius-sm);
+  border-left: 4px solid var(--primary);
+  background: #fafbfc;
+}
+
+.constitution-detail-card:last-child {
+  margin-bottom: 0;
+}
+
+.constitution-detail-card h4 {
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+.constitution-detail-card p {
+  font-size: 13px;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+/* Footer */
+.footer {
+  background: var(--text);
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  padding: 20px 0;
+  font-size: 12px;
+}
+
+/* Error message */
+.error-msg {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-light);
+}
+
+.error-msg .error-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .header {
+    padding: 28px 0 24px;
+  }
+  .header h1 {
+    font-size: 22px;
+  }
+  .step {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+  .step-connector {
+    width: 20px;
+  }
+  .section {
+    padding: 16px;
+  }
+  .card-header {
+    padding: 16px 16px 12px;
+  }
+  .card-header h2 {
+    font-size: 18px;
+  }
+  .form-row {
+    flex-direction: column;
+  }
+  .constitution-group {
+    padding: 14px;
+  }
+  .rating-option label {
+    padding: 4px 2px;
+    font-size: 10px;
+  }
+  .rating-value {
+    font-size: 14px;
+  }
+  .result-banner {
+    margin: 12px 16px;
+    padding: 20px;
+  }
+  .submit-area {
+    padding: 16px;
+  }
+  .btn-large {
+    width: 100%;
+    justify-content: center;
+  }
+  .result-table {
+    font-size: 13px;
+  }
+  .result-table th,
+  .result-table td {
+    padding: 8px 10px;
+  }
+}

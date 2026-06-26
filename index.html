@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>中医体质分类与判定系统 — GB/T 46939-2025</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- 顶部导航 -->
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <h1>中医体质分类与判定系统</h1>
+          <p class="subtitle">依据 GB/T 46939-2025 国家标准</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- 主要区域 -->
+    <main class="main">
+      <div class="container">
+        <!-- 步骤指示器 -->
+        <div class="steps" id="steps">
+          <div class="step active" data-step="1">
+            <span class="step-number">1</span>
+            <span class="step-label">填写问卷</span>
+          </div>
+          <div class="step-connector"></div>
+          <div class="step" data-step="2">
+            <span class="step-number">2</span>
+            <span class="step-label">计算判定</span>
+          </div>
+          <div class="step-connector"></div>
+          <div class="step" data-step="3">
+            <span class="step-number">3</span>
+            <span class="step-label">查看结果</span>
+          </div>
+        </div>
+
+        <!-- 页面1: 问卷页面 -->
+        <section class="page active" id="page-questionnaire">
+          <div class="card">
+            <div class="card-header">
+              <h2>体质辨识问卷</h2>
+              <p class="text-muted">
+                请根据近一年的体验和感觉，回答以下问题。每个问题从"没有"到"总是"分为5个等级。
+              </p>
+            </div>
+
+            <!-- 基本信息 -->
+            <div class="section">
+              <h3 class="section-title">基本信息</h3>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="name">姓名</label>
+                  <input type="text" id="name" placeholder="请输入姓名" />
+                </div>
+                <div class="form-group">
+                  <label for="gender">性别</label>
+                  <select id="gender">
+                    <option value="male">男</option>
+                    <option value="female">女</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="age">年龄</label>
+                  <input
+                    type="number"
+                    id="age"
+                    placeholder="请输入年龄"
+                    min="1"
+                    max="150"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- 问卷容器 -->
+            <div id="questionnaire-container"></div>
+
+            <!-- 提交按钮 -->
+            <div class="submit-area">
+              <button
+                class="btn btn-primary btn-large"
+                id="btn-submit"
+                onclick="submitAnswers()"
+              >
+                <span class="btn-icon">📋</span>
+                提交并判定体质
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 页面2: 结果页面 -->
+        <section class="page" id="page-result">
+          <div class="card">
+            <div class="card-header">
+              <h2>体质判定结果</h2>
+              <p class="text-muted">基于 GB/T 46939-2025 标准的计算结果</p>
+            </div>
+
+            <!-- 主要判定结果 -->
+            <div class="result-banner" id="result-banner">
+              <div class="result-type" id="result-type"></div>
+              <div class="result-desc" id="result-desc"></div>
+            </div>
+
+            <!-- 体质雷达图 -->
+            <div class="section">
+              <h3 class="section-title">体质得分分布</h3>
+              <div class="chart-container">
+                <canvas id="radar-chart"></canvas>
+              </div>
+            </div>
+
+            <!-- 详细得分表 -->
+            <div class="section">
+              <h3 class="section-title">各体质得分详情</h3>
+              <div class="table-container">
+                <table class="result-table" id="result-table">
+                  <thead>
+                    <tr>
+                      <th>体质类型</th>
+                      <th>原始分</th>
+                      <th>转化分</th>
+                      <th>判定结果</th>
+                    </tr>
+                  </thead>
+                  <tbody id="result-body"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- 体质特征说明 -->
+            <div class="section" id="constitution-detail-section">
+              <h3 class="section-title">体质特征与调养建议</h3>
+              <div id="constitution-detail"></div>
+            </div>
+
+            <!-- 操作按钮 -->
+            <div class="submit-area">
+              <button class="btn btn-secondary btn-large" onclick="resetAll()">
+                <span class="btn-icon">🔄</span>
+                重新测评
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+      <div class="container">
+        <p>
+          参照 GB/T 46939-2025《中医体质分类与判定》国家标准 ·
+          仅供参考，不构成医疗建议
+        </p>
+      </div>
+    </footer>
+
+    <script src="js/constitution-data.js"></script>
+    <script src="js/scoring.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
