@@ -1,0 +1,6 @@
+name = "tcm-constitution-api"
+compatibility_date = "2026-06-26"
+main = "src/index.js"
+
+[observability]
+enabled = true
