@@ -10,25 +10,29 @@ function renderQuestionnaire() {
   const container = document.getElementById("questionnaire-container");
   let html = "";
 
+  // 收集所有问题到扁平数组
+  const allItems = [];
   for (const ct of CONSTITUTION_TYPES) {
-    html += `<div class="constitution-group" data-constitution="${ct.id}">`;
-    html += `<div class="constitution-group-header">`;
-    html += `<span class="constitution-group-icon">${ct.icon}</span>`;
-    html += `<span class="constitution-group-title" style="color:${ct.color}">${ct.name}</span>`;
-    html += `<span class="constitution-group-subtitle">${ct.description}</span>`;
-    html += `</div>`;
-
     for (const item of ct.items) {
-      html += renderQuestionItem(ct.id, item);
+      allItems.push({ constitutionId: ct.id, item });
     }
+  }
 
-    html += `</div>`;
+  // Fisher-Yates 洗牌算法打乱顺序
+  for (let i = allItems.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [allItems[i], allItems[j]] = [allItems[j], allItems[i]];
+  }
+
+  // 渲染打乱后的问题
+  for (const { constitutionId, item } of allItems) {
+    html += renderQuestionItem(item);
   }
 
   container.innerHTML = html;
 }
 
-function renderQuestionItem(constitutionId, item) {
+function renderQuestionItem(item) {
   let notes = "";
   if (item.reverse) {
     notes = `<span class="reverse-note">逆向计分</span>`;

@@ -213,49 +213,17 @@ body {
   box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.12);
 }
 
-/* Constitution Question Groups */
-.constitution-group {
-  margin-bottom: 28px;
-  padding: 20px;
+/* Question Items — 每道题独立卡片 */
+.question-item {
+  padding: 16px 20px;
+  margin-bottom: 12px;
   border-radius: var(--radius-sm);
   background: #fafbfc;
   border: 1px solid var(--border);
 }
 
-.constitution-group:last-child {
-  margin-bottom: 0;
-}
-
-.constitution-group-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 14px;
-}
-
-.constitution-group-icon {
-  font-size: 24px;
-}
-
-.constitution-group-title {
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.constitution-group-subtitle {
-  font-size: 12px;
-  color: var(--text-light);
-  margin-left: auto;
-}
-
-/* Question Items */
-.question-item {
-  padding: 12px 0;
-  border-bottom: 1px solid #edf0f3;
-}
-
 .question-item:last-child {
-  border-bottom: none;
+  margin-bottom: 0;
 }
 
 .question-text {
@@ -604,9 +572,6 @@ body {
   }
   .form-row {
     flex-direction: column;
-  }
-  .constitution-group {
-    padding: 14px;
   }
   .rating-option label {
     padding: 4px 2px;
