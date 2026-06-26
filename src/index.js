@@ -78,44 +78,87 @@ const CONSTITUTION_TYPES = [
 /** 各体质条目定义：条目ID、是否逆向计分、性别限制 */
 const ITEMS = {
   // 平和质 (4 items)
-  b1:  { constitution: "balanced",        text: "您精力充沛吗？",                        reverse: false },
-  b2:  { constitution: "balanced",        text: "您容易疲乏吗？",                        reverse: true },
-  b3:  { constitution: "balanced",        text: "您感到闷闷不乐、情绪低沉吗？",            reverse: true },
-  b4:  { constitution: "balanced",        text: "您比一般人耐受不了寒冷（冬天的寒冷、夏天的冷空调、电扇等）吗？", reverse: true },
+  b1: { constitution: "balanced", text: "您精力充沛吗？", reverse: false },
+  b2: { constitution: "balanced", text: "您容易疲乏吗？", reverse: true },
+  b3: {
+    constitution: "balanced",
+    text: "您感到闷闷不乐、情绪低沉吗？",
+    reverse: true,
+  },
+  b4: {
+    constitution: "balanced",
+    text: "您比一般人耐受不了寒冷（冬天的寒冷、夏天的冷空调、电扇等）吗？",
+    reverse: true,
+  },
   // 气虚质 (3 items)
-  qd1: { constitution: "qi-deficiency",   text: "您容易疲乏吗？" },
-  qd2: { constitution: "qi-deficiency",   text: "您容易气短（呼吸短促、接不上气）吗？" },
-  qd3: { constitution: "qi-deficiency",   text: "您容易心慌吗？" },
+  qd1: { constitution: "qi-deficiency", text: "您容易疲乏吗？" },
+  qd2: {
+    constitution: "qi-deficiency",
+    text: "您容易气短（呼吸短促、接不上气）吗？",
+  },
+  qd3: { constitution: "qi-deficiency", text: "您容易心慌吗？" },
   // 阳虚质 (3 items)
-  yd1: { constitution: "yang-deficiency", text: "您胃脘部、背部或腰膝部怕冷吗？" },
-  yd2: { constitution: "yang-deficiency", text: "您感到怕冷、衣服比别人穿得多吗？" },
-  yd3: { constitution: "yang-deficiency", text: "您比一般人耐受不了寒冷（冬天的寒冷、夏天的冷空调、电扇等）吗？" },
+  yd1: {
+    constitution: "yang-deficiency",
+    text: "您胃脘部、背部或腰膝部怕冷吗？",
+  },
+  yd2: {
+    constitution: "yang-deficiency",
+    text: "您感到怕冷、衣服比别人穿得多吗？",
+  },
+  yd3: {
+    constitution: "yang-deficiency",
+    text: "您比一般人耐受不了寒冷（冬天的寒冷、夏天的冷空调、电扇等）吗？",
+  },
   // 阴虚质 (3 items)
-  yid1:{ constitution: "yin-deficiency",  text: "您感觉身体、脸上发热吗？" },
-  yid2:{ constitution: "yin-deficiency",  text: "您皮肤或口唇干吗？" },
-  yid3:{ constitution: "yin-deficiency",  text: "您面部两颧潮红或偏红吗？" },
+  yid1: { constitution: "yin-deficiency", text: "您感觉身体、脸上发热吗？" },
+  yid2: { constitution: "yin-deficiency", text: "您皮肤或口唇干吗？" },
+  yid3: { constitution: "yin-deficiency", text: "您面部两颧潮红或偏红吗？" },
   // 痰湿质 (3 items)
-  pd1: { constitution: "phlegm-dampness", text: "您感到身体沉重不轻松或不爽快吗？" },
+  pd1: {
+    constitution: "phlegm-dampness",
+    text: "您感到身体沉重不轻松或不爽快吗？",
+  },
   pd2: { constitution: "phlegm-dampness", text: "您腹部肥满松软吗？" },
   pd3: { constitution: "phlegm-dampness", text: "您嘴里有黏黏的感觉吗？" },
   // 湿热质 (4 items, 2 with gender limits)
-  dh1: { constitution: "damp-heat",       text: "您面部或鼻部有油腻感或者油亮发光吗？" },
-  dh2: { constitution: "damp-heat",       text: "您小便时尿道有发热感、尿色浓（深）吗？" },
-  dh3: { constitution: "damp-heat",       text: "您带下色黄（白带颜色发黄）吗？",        gender: "female" },
-  dh4: { constitution: "damp-heat",       text: "您的阴囊部位潮湿吗？",                  gender: "male" },
+  dh1: {
+    constitution: "damp-heat",
+    text: "您面部或鼻部有油腻感或者油亮发光吗？",
+  },
+  dh2: {
+    constitution: "damp-heat",
+    text: "您小便时尿道有发热感、尿色浓（深）吗？",
+  },
+  dh3: {
+    constitution: "damp-heat",
+    text: "您带下色黄（白带颜色发黄）吗？",
+    gender: "female",
+  },
+  dh4: {
+    constitution: "damp-heat",
+    text: "您的阴囊部位潮湿吗？",
+    gender: "male",
+  },
   // 血瘀质 (3 items)
-  bs1: { constitution: "blood-stasis",    text: "您身体上有哪里疼痛吗？" },
-  bs2: { constitution: "blood-stasis",    text: "您面色晦暗或容易出现褐斑吗？" },
-  bs3: { constitution: "blood-stasis",    text: "您口唇颜色偏暗吗？" },
+  bs1: { constitution: "blood-stasis", text: "您身体上有哪里疼痛吗？" },
+  bs2: { constitution: "blood-stasis", text: "您面色晦暗或容易出现褐斑吗？" },
+  bs3: { constitution: "blood-stasis", text: "您口唇颜色偏暗吗？" },
   // 气郁质 (3 items)
-  qs1: { constitution: "qi-stagnation",   text: "您感到闷闷不乐、情绪低沉吗？" },
-  qs2: { constitution: "qi-stagnation",   text: "您容易精神紧张、焦虑不安吗？" },
-  qs3: { constitution: "qi-stagnation",   text: "您多愁善感、感情脆弱吗？" },
+  qs1: { constitution: "qi-stagnation", text: "您感到闷闷不乐、情绪低沉吗？" },
+  qs2: { constitution: "qi-stagnation", text: "您容易精神紧张、焦虑不安吗？" },
+  qs3: { constitution: "qi-stagnation", text: "您多愁善感、感情脆弱吗？" },
   // 特禀质 (4 items)
-  al1: { constitution: "allergic",        text: "您没有感冒时也会打喷嚏吗？" },
-  al2: { constitution: "allergic",        text: "您容易过敏（对药物、食物、气味、花粉或在季节交替、气候变化时）吗？" },
-  al3: { constitution: "allergic",        text: "您的皮肤容易起荨麻疹（风团、风疹块、风疙瘩）吗？" },
-  al4: { constitution: "allergic",        text: "您的皮肤一抓就红、并出现抓痕吗？" },
+  al1: { constitution: "allergic", text: "您没有感冒时也会打喷嚏吗？" },
+  al2: {
+    constitution: "allergic",
+    text: "您容易过敏（对药物、食物、气味、花粉或在季节交替、气候变化时）吗？",
+  },
+  al3: {
+    constitution: "allergic",
+    text: "您的皮肤容易起荨麻疹（风团、风疹块、风疙瘩）吗？",
+  },
+  al4: { constitution: "allergic", text: "您的皮肤一抓就红、并出现抓痕吗？" },
 };
 
 // ============================================================
@@ -184,7 +227,7 @@ function performAssessment(answers, gender) {
       label,
       answeredCount: items.length,
       totalItems: Object.values(ITEMS).filter(
-        (i) => i.constitution === ct.id && (!i.gender || i.gender === gender)
+        (i) => i.constitution === ct.id && (!i.gender || i.gender === gender),
       ).length,
     };
   });
@@ -228,7 +271,8 @@ function determineConclusion(results) {
 
   if (balanced.verdict === "basic") {
     const biased = results.filter(
-      (r) => r.id !== "balanced" && (r.verdict === "yes" || r.verdict === "tend")
+      (r) =>
+        r.id !== "balanced" && (r.verdict === "yes" || r.verdict === "tend"),
     );
     return {
       isBalanced: false,
@@ -236,7 +280,8 @@ function determineConclusion(results) {
       primaryName: "基本是平和质",
       primaryIcon: "🌿",
       biased,
-      description: "您基本属于平和质，但部分偏颇体质有一定倾向，建议针对性调养。",
+      description:
+        "您基本属于平和质，但部分偏颇体质有一定倾向，建议针对性调养。",
     };
   }
 
@@ -304,70 +349,6 @@ function jsonResponse(data, status = 200) {
 }
 
 // ============================================================
-// HTML 首页
-// ============================================================
-
-const INDEX_HTML = `<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>中医体质分类与判定 API</title>
-  <style>
-    body { font-family: -apple-system, "PingFang SC", sans-serif; max-width: 720px; margin: 0 auto; padding: 40px 20px; color: #333; line-height: 1.6; }
-    h1 { color: #4a7c59; }
-    .endpoint { background: #f5f7f6; border-radius: 8px; padding: 16px 20px; margin: 12px 0; }
-    code { background: #eef1f0; padding: 2px 6px; border-radius: 4px; font-size: 14px; }
-    pre { background: #2d2d2d; color: #e6e6e6; padding: 16px; border-radius: 8px; overflow-x: auto; font-size: 13px; }
-    .badge { display: inline-block; background: #4a7c59; color: #fff; padding: 2px 10px; border-radius: 4px; font-size: 12px; }
-  </style>
-</head>
-<body>
-  <h1>🌿 中医体质分类与判定 API</h1>
-  <p>依据 GB/T 46939-2025 国家标准，提供体质判定的服务端 API。</p>
-  <hr>
-  <h2>API 端点</h2>
-
-  <div class="endpoint">
-    <strong><span class="badge">GET</span> <code>/api/health</code></strong>
-    <p>健康检查</p>
-  </div>
-
-  <div class="endpoint">
-    <strong><span class="badge">GET</span> <code>/api/types</code></strong>
-    <p>获取9种体质类型列表</p>
-  </div>
-
-  <div class="endpoint">
-    <strong><span class="badge">GET</span> <code>/api/questions</code></strong>
-    <p>获取判定条目（含性别限制信息）</p>
-  </div>
-
-  <div class="endpoint">
-    <strong><span class="badge">POST</span> <code>/api/assess</code></strong>
-    <p>提交答案进行体质判定</p>
-    <pre>{
-  "gender": "male" | "female",
-  "answers": {
-    "b1": 5,
-    "b2": 1,
-    ...
-  }
-}</pre>
-  </div>
-
-  <hr>
-  <p style="color:#888;font-size:13px;">
-    🌐 在线测评页面：
-    <a href="https://tcm-constitution.pages.dev" target="_blank">tcm-constitution.pages.dev</a>
-    <br>
-    📦 GitHub：
-    <a href="https://github.com/kasc0206/tcm-constitution" target="_blank">kasc0206/tcm-constitution</a>
-  </p>
-</body>
-</html>`;
-
-// ============================================================
 // Worker 路由
 // ============================================================
 
@@ -395,7 +376,10 @@ export default {
       return jsonResponse({ types: CONSTITUTION_TYPES });
     }
 
-    if (url.pathname === "/api/questions" || url.pathname === "/api/questions/") {
+    if (
+      url.pathname === "/api/questions" ||
+      url.pathname === "/api/questions/"
+    ) {
       const questions = Object.entries(ITEMS).map(([id, item]) => ({
         id,
         constitution: item.constitution,
@@ -406,13 +390,19 @@ export default {
       return jsonResponse({ questions });
     }
 
-    if ((url.pathname === "/api/assess" || url.pathname === "/api/assess/") && method === "POST") {
+    if (
+      (url.pathname === "/api/assess" || url.pathname === "/api/assess/") &&
+      method === "POST"
+    ) {
       try {
         const body = await request.json();
         const { gender, answers } = body;
 
         if (!gender || !["male", "female"].includes(gender)) {
-          return jsonResponse({ error: "请提供有效的性别参数 (male/female)" }, 400);
+          return jsonResponse(
+            { error: "请提供有效的性别参数 (male/female)" },
+            400,
+          );
         }
         if (!answers || typeof answers !== "object") {
           return jsonResponse({ error: "请提供 answers 对象" }, 400);
@@ -425,14 +415,29 @@ export default {
       }
     }
 
-    // 首页
-    if (url.pathname === "/" || url.pathname === "") {
-      return new Response(INDEX_HTML, {
-        headers: { ...CORS_HEADERS, "Content-Type": "text/html; charset=utf-8" },
-      });
+    // 静态资源 — 由 Workers Static Assets 处理
+    // 根路径或未匹配 API 路由时，尝试从 assets 获取对应文件
+    try {
+      if (url.pathname === "/" || url.pathname === "") {
+        // 根路径返回 index.html
+        const indexReq = new Request(
+          new URL("/index.html", request.url),
+          request,
+        );
+        return await env.ASSETS.fetch(indexReq);
+      }
+      return await env.ASSETS.fetch(request);
+    } catch {
+      // assets 返回 404 时，回退到 index.html（支持 SPA 客户端路由）
+      try {
+        const indexReq = new Request(
+          new URL("/index.html", request.url),
+          request,
+        );
+        return await env.ASSETS.fetch(indexReq);
+      } catch {
+        return jsonResponse({ error: "Not Found", path: url.pathname }, 404);
+      }
     }
-
-    // 404
-    return jsonResponse({ error: "Not Found", path: url.pathname }, 404);
   },
 };
