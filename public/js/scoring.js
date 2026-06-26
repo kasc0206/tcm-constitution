@@ -24,7 +24,7 @@ function calculateConstitutionScore(scores, reverseFlags) {
   // 转化分数 = [(原始分 - 条目数) / (条目数 × 4)] × 100
   const convertedScore = ((rawScore - n) / (n * 4)) * 100;
 
-  return { rawScore, convertedScore };
+  return { rawScore, convertedScore: Math.round(convertedScore * 100) / 100 };
 }
 
 /**
@@ -92,7 +92,7 @@ function performAssessment(answers, gender) {
       results.push({
         ...ct,
         rawScore,
-        convertedScore: Math.round(convertedScore * 100) / 100,
+        convertedScore,
         answeredCount: answeredItems.length,
         totalItems: ct.items.filter((i) => !i.gender || i.gender === gender)
           .length,
@@ -103,7 +103,7 @@ function performAssessment(answers, gender) {
       results.push({
         ...ct,
         rawScore,
-        convertedScore: Math.round(convertedScore * 100) / 100,
+        convertedScore,
         answeredCount: answeredItems.length,
         totalItems: ct.items.filter((i) => !i.gender || i.gender === gender)
           .length,
